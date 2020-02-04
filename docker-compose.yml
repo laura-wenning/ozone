@@ -1,0 +1,31 @@
+version: '3'
+services:
+  frontend:
+    image: node:12
+    command: bash -c 'yarn install --ignore-optional && yarn start'
+    ports:
+      - 3001:3001
+    volumes:
+      - ./frontend/:/usr/src/app
+    working_dir: /usr/src/app
+    env_file:
+     - frontend.env
+    networks:
+     - ozone-dev-net
+
+  server:
+    image: node:12
+    command: bash -c 'yarn install --ignore-optional && yarn start'
+    ports:
+      - 8002:8000
+    volumes:
+      - ./server/:/usr/src/app
+    working_dir: /usr/src/app
+    env_file: 
+      - server.env
+    networks:
+      - ozone-dev-net
+
+networks: 
+  ozone-dev-net:
+  
