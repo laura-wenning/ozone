@@ -21,8 +21,6 @@ services:
     volumes:
       - ./server/:/usr/src/app
     working_dir: /usr/src/app
-    env_file: 
-      - server.env
     networks:
       - ozone-dev-net
 

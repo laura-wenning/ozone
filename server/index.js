@@ -7,9 +7,11 @@ const pinoHttp = require('pino-http')
 module.exports = function main (options, cb) {
   // Set default options
   const ready = cb || function () {}
-  const opts = Object.assign({
-    // Default options
-  }, options)
+  
+  const opts = {
+    port: 8000,
+    host: "0.0.0.0"
+  }
 
   const logger = pino()
 
@@ -84,6 +86,7 @@ module.exports = function main (options, cb) {
 
     serverStarted = true
     const addr = server.address()
+    console.log(opts)
     logger.info(`Started at ${opts.host || addr.host || 'localhost'}:${addr.port}`)
     ready(err, app, server)
   })
