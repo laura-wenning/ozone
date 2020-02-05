@@ -2,9 +2,9 @@ version: '3'
 services:
   frontend:
     image: node:12
-    command: bash -c 'yarn install --ignore-optional && yarn start'
+    command: bash -c 'yarn install --ignore-optional && yarn run dev'
     ports:
-      - 3001:3001
+      - 3001:3000
     volumes:
       - ./frontend/:/usr/src/app
     working_dir: /usr/src/app

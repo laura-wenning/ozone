@@ -8,9 +8,11 @@ module.exports = function main (options, cb) {
   // Set default options
   const ready = cb || function () {}
   
+  // Manually defined
+  // TODO - pull from ENV
   const opts = {
     port: 8000,
-    host: "0.0.0.0"
+    host: "0.0.0.0" // Required to allow calls outside of docker ping this
   }
 
   const logger = pino()
