@@ -1,13 +1,13 @@
 'use strict'
-const express = require('express')
-const httpErrors = require('http-errors')
-const pino = require('pino')
-const pinoHttp = require('pino-http')
+import express from "express";
+import httpErrors from "http-errors";
+import pino from "pino";
+import pinoHttp from "pino-http";
 
 module.exports = function main (options, cb) {
   // Set default options
-  const ready = cb || function () {}
-  
+  const ready = cb
+
   // Manually defined
   // TODO - pull from ENV
   const opts = {
@@ -18,7 +18,7 @@ module.exports = function main (options, cb) {
   const logger = pino()
 
   // Server state
-  let server
+  let server = null
   let serverStarted = false
   let serverClosing = false
 
@@ -50,7 +50,7 @@ module.exports = function main (options, cb) {
   // Common middleware
   // app.use(/* ... */)
   app.use(pinoHttp({ logger }))
-      
+
   // Register routes
   // @NOTE: require here because this ensures that even syntax errors
   // or other startup related errors are caught logged and debuggable.
@@ -88,7 +88,6 @@ module.exports = function main (options, cb) {
 
     serverStarted = true
     const addr = server.address()
-    console.log(opts)
     logger.info(`Started at ${opts.host || addr.host || 'localhost'}:${addr.port}`)
     ready(err, app, server)
   })
