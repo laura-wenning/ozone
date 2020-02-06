@@ -4,12 +4,17 @@ import httpErrors from "http-errors";
 import pino from "pino";
 import pinoHttp from "pino-http";
 
-module.exports = function main (options, cb) {
+interface IOptions {
+  port: number;
+  host: string
+}
+
+module.exports = function main (options: IOptions, cb: () => void) {
   // Set default options
-  const ready = cb
+  const ready = cb;
 
   // Manually defined
-  // TODO - pull from ENV
+  // TODO - pull from ENV if we can
   const opts = {
     port: 8000,
     host: "0.0.0.0" // Required to allow calls outside of docker ping this
@@ -18,12 +23,12 @@ module.exports = function main (options, cb) {
   const logger = pino()
 
   // Server state
-  let server = null
-  let serverStarted = false
-  let serverClosing = false
+  let server: any = null; // TODO - this is a Server type. Find where it's declared
+  let serverStarted: boolean = false;
+  let serverClosing: boolean = false;
 
   // Setup error handling
-  function unhandledError (err) {
+  function unhandledError (err: Error) {
     // Log the errors
     logger.error(err)
 
@@ -63,7 +68,12 @@ module.exports = function main (options, cb) {
   app.use(function fourOhFourHandler (req, res, next) {
     next(httpErrors(404, `Route not found: ${req.url}`))
   })
-  app.use(function fiveHundredHandler (err, req, res, next) {
+  app.use(function fiveHundredHandler (
+    err: any, // TODO - find this type
+    req: Express.Request,
+    res: any, // TODO - this one too >_>
+    next: any // TODO - find out type to this
+  ) {
     if (err.status >= 500) {
       logger.error(err)
     }
@@ -76,7 +86,7 @@ module.exports = function main (options, cb) {
   })
 
   // Start server
-  server = app.listen(opts.port, opts.host, function (err) {
+  server = app.listen(opts.port, opts.host, function (err: any) {
     if (err) {
       return ready(err, app, server)
     }

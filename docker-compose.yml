@@ -9,7 +9,7 @@ services:
       - ./frontend/:/usr/src/app
     working_dir: /usr/src/app
     env_file:
-     - frontend.env
+     - environment/frontend.env
     networks:
      - ozone-dev-net
 
