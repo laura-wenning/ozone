@@ -8,3 +8,5 @@ PORT - the port the react-server will run on
 
 LETSENCRYPT_HOST - the url of the react server for nginx-letsencrypt
 LETSENCRYPT_EMAIL - the email for TLS expiry for nginx-letsencrypt
+
+PROD - set to 1 if this is a production build

@@ -2,7 +2,7 @@ version: '3'
 services:
   react-server:
     image: node:12
-    command: bash -c 'yarn install --ignore-optional && yarn run dev'
+    command: bash -c './start-server.sh'
     ports:
       - 3001:3000
     volumes:
