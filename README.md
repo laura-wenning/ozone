@@ -21,6 +21,7 @@ What we need to get done before we can submodule this in our composify
  - A homepage that *doesn't* look like garbage :p
  - Google sign in (my email only)
  - MySQL connection
+ - Base styling (material-ui)
 
 ### Future Features
  - Adding/editing apps

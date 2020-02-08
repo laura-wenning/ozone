@@ -12,6 +12,7 @@ services:
      - environment/frontend.env
     networks:
      - ozone-dev-net
+     - nginx_common
 
   server:
     image: node:12
@@ -26,4 +27,6 @@ services:
 
 networks: 
   ozone-dev-net:
+  nginx_common:
+    external: true
   

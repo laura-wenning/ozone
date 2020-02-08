@@ -7,8 +7,8 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "eslint -c tslint.json -p tsconfig.json --fix --force",
-    "build": "tsc",
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix --force",
+    "build": "tsc --build tsconfig.json",
     "prestart": "npm run build",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,6 +18,8 @@
     "@types/http-errors": "^1.6.3",
     "@types/pino": "^5.15.4",
     "@types/pino-http": "^4.3.2",
+    "babel": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^6.8.0",
     "express": "^4.17.1",
     "pino": "^5.16.0",
