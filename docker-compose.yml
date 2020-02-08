@@ -6,24 +6,13 @@ services:
     ports:
       - 3001:3000
     volumes:
-      - ./frontend/:/usr/src/app
+      - ./react-server/:/usr/src/app
     working_dir: /usr/src/app
     env_file:
      - environment/frontend.env
     networks:
      - ozone-dev-net
      - nginx_common
-
-  server:
-    image: node:12
-    command: bash -c 'yarn install --ignore-optional && yarn start'
-    ports:
-      - 8002:8000
-    volumes:
-      - ./server/:/usr/src/app
-    working_dir: /usr/src/app
-    networks:
-      - ozone-dev-net
 
 networks: 
   ozone-dev-net:
