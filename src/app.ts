@@ -1,5 +1,6 @@
 import express from 'express';
-import bot from "./ozone_bot/initialize";
+import getOzone from "./ozone_bot/bot";
+import initializeEgo from "./ozone_bot/ego";
 
 const app = express();
 const port = 3000; 
@@ -7,7 +8,6 @@ app.get('/', (req, res) => {
   res.send('The sedulous hyena ate the antelope!!@');
 });
 
-const bot2 = bot;
 
 app.listen(port, err => {
   if (err) {
@@ -15,7 +15,8 @@ app.listen(port, err => {
   }
 
   // Initialize bot
-  
+  const ozone = getOzone();
+  initializeEgo(ozone);
 
   return console.log(`server is listening on ${port}`);
 });
