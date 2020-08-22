@@ -18,7 +18,7 @@ app.listen(port, err => {
   
 
   // Initialize bot
-  // const ozone = getOzone();
-  // initializeEgo(ozone);
+  const ozone = getOzone();
+  initializeEgo(ozone);
   return console.log(`server is listening on ${port}`);
 });

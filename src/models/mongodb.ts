@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export let db: mongoose.Connection;
+let db: mongoose.Connection;
 
 export function initializeDatabase() {
   mongoose.connect(
@@ -18,4 +18,6 @@ export function initializeDatabase() {
   });
 }
 
-
+export  function getDatabase() {
+  return mongoose.connection;
+}
