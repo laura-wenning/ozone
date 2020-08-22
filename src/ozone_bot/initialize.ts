@@ -1,10 +1,9 @@
 import discord from "discord.js";
-import config from "../../config.json";
+import config from "../config";
+
 
 const bot = new discord.Client();
 // TODO - move to config
-console.log("Load")
-console.log(config)
 const token = config.token;
 bot.on("ready", () => {
   console.log("Ozone is ready!");
@@ -34,6 +33,5 @@ bot.on('message', async (msg) => {
 
   
 })
-
 
 export default bot;
