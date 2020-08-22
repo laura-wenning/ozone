@@ -9,8 +9,10 @@
     "compose": "yarn install && yarn nodemon"
   },
   "dependencies": {
+    "@types/mongoose": "^5.7.36",
     "discord.js": "^12.3.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.10.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.7",

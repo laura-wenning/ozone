@@ -1,5 +1,4 @@
 import discord from "discord.js";
-import config from "../config";
 
 let ozoneBot: discord.Client;
 
@@ -9,7 +8,7 @@ function intializeOzone() {
     console.log("Ozone is ready!");
   });
 
-  ozoneBot.login(config.token);  
+  ozoneBot.login(process.env.OZONE_TOKEN);  
 }
 
 function getOzone() {
