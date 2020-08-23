@@ -1,21 +1,24 @@
 import express from 'express';
-import bot from "./ozone_bot/initialize";
+import getOzone from "./ozone_bot/bot";
+import initializeEgo from "./ozone_bot/ego";
+import {initializeDatabase} from "./models/mongodb";
 
 const app = express();
 const port = 3000; 
 app.get('/', (req, res) => {
-  res.send('The sedulous hyena ate the antelope!!@');
+  res.send('Hello! Everything is running as it should.');
 });
-
-const bot2 = bot;
 
 app.listen(port, err => {
   if (err) {
     return console.error(err);
   }
 
-  // Initialize bot
+  initializeDatabase();
   
+  // Initialize bot
+  const ozone = getOzone();
+  initializeEgo(ozone);
 
   return console.log(`server is listening on ${port}`);
 });
