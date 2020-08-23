@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
-let db: mongoose.Connection;
-
+/**
+ * Initializes the database connection
+ */
 export function initializeDatabase() {
   mongoose.connect(
     process.env.MONGO_ADDRESS, 
@@ -10,14 +11,10 @@ export function initializeDatabase() {
   .catch((e) => {
     console.log(e);
   });
-  db = mongoose.connection;
+  const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
     // we're connected!
     console.log("Database is connected!")
   });
-}
-
-export  function getDatabase() {
-  return mongoose.connection;
 }

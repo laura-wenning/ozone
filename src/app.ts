@@ -6,7 +6,7 @@ import {initializeDatabase} from "./models/mongodb";
 const app = express();
 const port = 3000; 
 app.get('/', (req, res) => {
-  res.send('The sedulous hyena ate the antelope!!@');
+  res.send('Hello! Everything is running as it should.');
 });
 
 app.listen(port, err => {
@@ -16,9 +16,9 @@ app.listen(port, err => {
 
   initializeDatabase();
   
-
   // Initialize bot
   const ozone = getOzone();
   initializeEgo(ozone);
+
   return console.log(`server is listening on ${port}`);
 });
