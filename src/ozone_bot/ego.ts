@@ -1,6 +1,8 @@
 
 import discord from "discord.js";
 import mongoose from "mongoose";
+import { gql } from "graphql-request";
+import { queryGQL } from "../gql";
 
 // The highest value we can get for random number generation
 let high: number = 0;
@@ -49,27 +51,45 @@ export default async function initializeEgo(bot: discord.Client) {
   });
 }
 
+const highestEgotismQuery = gql`
+  query {
+    egotisms (sort: "-high", limit: 1) {
+      _id,
+      saying,
+      high
+    }
+  }
+`;
+
 /**
  * Reloads cached information
  */
-export function reloadEgo() {
-  egotism.findOne({}).sort({high: -1}).exec((_, res: IEgotism) => {
-    high = res.high;
-  })
+export async function reloadEgo() {
+  const response: any = await queryGQL(highestEgotismQuery);
+
+  high = response.egotisms[0].high;
 }
 
 /**
  * Finds a random ego message and replies to the given message
  * @param msg The message containing the command
  */
-function ego(msg: discord.Message) {
+async function ego(msg: discord.Message) {
   const value = Math.floor(Math.random() * (high + 1));
-  egotism.findOne({
-    low: {$lte: value},
-    high: {$gt: value},
-  })
-  .exec((_, res: IEgotism) => {
-    msg.reply(res.saying);
-  })
+  const highestEgotismQuery = gql`
+    query {
+      egotisms (
+        limit: 1,
+        filters: {
+          low_lte: ${value},
+          high_gt: ${value}
+        }
+      ) {
+        saying
+      }
+    }
+  `;
+  const res: any = await queryGQL(highestEgotismQuery);
+  msg.reply(res.egotisms[0].saying);
   msg.react("😀")
 }
