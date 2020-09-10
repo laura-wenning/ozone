@@ -2,6 +2,8 @@ import express from 'express';
 import getOzone from "./ozone_bot/bot";
 import initializeEgo from "./ozone_bot/ego";
 import {initializeDatabase} from "./models/mongodb";
+import { request, gql } from 'graphql-request'
+import { queryGQL } from './gql';
 
 const app = express();
 const port = 3000; 
@@ -19,6 +21,9 @@ app.listen(port, err => {
   // Initialize bot
   const ozone = getOzone();
   initializeEgo(ozone);
+
+ 
+
 
   return console.log(`server is listening on ${port}`);
 });
