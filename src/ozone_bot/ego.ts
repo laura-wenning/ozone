@@ -68,7 +68,6 @@ export async function reloadEgo() {
   const response: any = await queryGQL(highestEgotismQuery);
 
   high = response.egotisms[0].high;
-  console.log(response);
 }
 
 /**
