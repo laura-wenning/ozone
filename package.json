@@ -9,8 +9,10 @@
     "compose": "yarn install && yarn nodemon"
   },
   "dependencies": {
+    "@typegoose/typegoose": "^7.4.5",
     "@types/mongoose": "^5.7.36",
     "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.3.0",
     "graphql-request": "^3.1.0",
