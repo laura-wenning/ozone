@@ -21,9 +21,7 @@ app.get('/read', (req, res) => {
   res.send('Hello! Everything is running as it should.');
 });
 
-app.get(`/msg`, (req, res) => {
 
-});
 
 app.listen(port, async err => {
   if (err) {
