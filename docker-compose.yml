@@ -1,19 +1,12 @@
 version: '3'
 services:
-  react-server:
+  ozone:
     image: node:12
-    command: bash -c './start-server.sh'
+    command: yarn dev
     ports:
-      - 3001:3000
+      - ${PORT}:${PORT}
     volumes:
-      - ./react-server/:/usr/src/app
-    working_dir: /usr/src/app
+      - ./:/usr/src/app/
+    working_dir: /usr/src/app/
     env_file:
-     - environment/react-server.env
-    networks:
-     - nginx_common
-
-networks:
-  nginx_common:
-    external: true
-  
+     - .env

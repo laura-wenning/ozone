@@ -8,7 +8,7 @@ import { initializeMongoose } from './ozone_bot/mongoose';
 import { Champion } from './ozone_bot/champion';
 
 const app = express();
-const port = 4000; 
+const port = process.env.PORT; 
 
 let rpReader = null;
 
