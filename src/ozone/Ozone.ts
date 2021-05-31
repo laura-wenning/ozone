@@ -80,8 +80,6 @@ export class Ozone {
       });
 
       this.sendOnReady(this.champions[championID]);
-      this.sendTodaysWeather(this.champions[championID]);
-
     });
   }
 
