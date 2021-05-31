@@ -1,15 +1,41 @@
 import { Champion } from ".";
+import { rest } from "../../utilities/request";
 
 export async function fetchTodaysWeather(this: Champion) {
   const API_KEY = process.env.WEATHER_API_KEY;
   if (!API_KEY) { this.throw("No Weather API key found.") }
-  return {};
+  const weatherResponse = await rest.get("http://api.openweathermap.org/data/2.5/weather", { q: "detroit", APPID: API_KEY});
+  return weatherResponse;
 }
 
-export function weatherToReadable(): string {
-  return "";
+export function kelvinToFahrenheit(this: Champion, kelvin: number) {
+  const celsius = kelvin - 273.15;
+  return (celsius * (9/5)) + 32;
 }
 
-export function sendTodaysWeather(this: Champion): void {
-  this.champion.send("Good morning, Laura! The weather this morning is really sunny, and it'll be nice and toasty later with a high of 80 degrees.")
+export function weatherToReadable(
+  main: string,
+  description: string,
+  temp: number,
+  feelsLike: number,
+  high: number,
+  low: number,
+  wind: number
+): string {
+  return `Good morning! Today, the weather is ${main.toLowerCase()}. It is currently ${Math.round(temp)} degrees, and will get up to ${Math.round(high)}.`;
+}
+
+export async function sendTodaysWeather(this: Champion): Promise<void> {
+  const weather = await this.fetchTodaysWeather() as any;
+  const message = this.weatherToReadable(
+    weather.weather[0].main,
+    weather.weather[0].description,
+    this.kelvinToFahrenheit(weather.main.temp),
+    this.kelvinToFahrenheit(weather.main.feels_like),
+    this.kelvinToFahrenheit(weather.main.temp_max),
+    this.kelvinToFahrenheit(weather.main.temp_min),
+    weather.wind.speed,
+  );
+
+  this.send(message);
 }

@@ -17,10 +17,11 @@ export class Champion {
       throw "Ozone user does not exist";
     }
     await this.champion.createDM();
-    
+    this.fetchTodaysWeather();
     cron.schedule(`0 12 * * *`, () => {
       this.sendTodaysWeather();
-    })
+    });
+    this.sendTodaysWeather();
     // await this.champion.send("Hello Laura! Ozone up and on standby")
     // this.sendTodaysWeather();
 
@@ -36,7 +37,8 @@ export class Champion {
     throw err;
   }
 
-  public sendTodaysWeather = weather.sendTodaysWeather;
   protected fetchTodaysWeather = weather.fetchTodaysWeather;
+  protected kelvinToFahrenheit = weather.kelvinToFahrenheit;
   protected weatherToReadable = weather.weatherToReadable;
+  public sendTodaysWeather = weather.sendTodaysWeather;
 }
