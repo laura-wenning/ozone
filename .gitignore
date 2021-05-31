@@ -1,6 +1,8 @@
 .next/
 dist/
 node_modules/
+src/config/*
+!src/config/.keep
 
 *.env
 *.log
