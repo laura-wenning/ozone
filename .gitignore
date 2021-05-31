@@ -3,6 +3,7 @@ dist/
 node_modules/
 
 *.env
+*.log
 
 # The configuration file for secrets
 config.json

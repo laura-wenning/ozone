@@ -122,6 +122,7 @@ export class RPReader {
    * @param channel The channel to read
    */
   private async readChannel(channel: any) {
+    console.log(`Beginning channel read of ${channel.name}`)
     while(true) {
       const messages = await this.fetchMessagesFrom(channel);
       if (messages.length == 0) { break; }
@@ -138,6 +139,9 @@ export class RPReader {
     messages.forEach((message: any) => {
       this.updateMessage(message);
     });
+
+    console.log(`Ending channel read of ${channel.name}`)
+
   }
 
   private async readMessage(message) {

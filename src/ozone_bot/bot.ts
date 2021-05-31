@@ -1,17 +1,20 @@
 import discord from "discord.js";
+import { Champion } from "./champion";
 
 let ozoneBot: discord.Client;
 
-function intializeOzone() {
+async function intializeOzone() {
   ozoneBot = new discord.Client();
-  ozoneBot.on("ready", () => {
+  ozoneBot.on("ready", async () => {
+    const champion = new Champion(ozoneBot);
     console.log("Ozone is ready!");
   });
 
-  ozoneBot.login(process.env.OZONE_TOKEN);  
+  await ozoneBot.login(process.env.OZONE_TOKEN)
+
 }
 
-function getOzone() {
+async function getOzone() {
   if (ozoneBot === undefined) {
     intializeOzone();
   }
