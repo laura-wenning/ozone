@@ -1,6 +1,6 @@
-import { Client, User } from "discord.js";
+import { Client, Message, User } from "discord.js";
 import cron from "node-cron";
-import * as weather from "./weather";
+import { sendTodaysWeather } from "../commands/weather";
 import champions from "../config/champions.json";
 
 export enum DeploymentEnum {
@@ -25,12 +25,6 @@ export class Ozone {
     console.log("Beginning login.")
     this.bot.login(process.env.OZONE_TOKEN);
   }
-
-  // WEATHER
-  protected fetchTodaysWeather = weather.fetchTodaysWeather;
-  protected kelvinToFahrenheit = weather.kelvinToFahrenheit;
-  protected weatherToReadable = weather.weatherToReadable;
-  public sendTodaysWeather = weather.sendTodaysWeather;
 
   /**
    * Determines the current deployment type. This may be used later on for 
@@ -58,6 +52,7 @@ export class Ozone {
   private async onReady() {
     console.log("Log in successful.")
     // Load champions
+    this.loadCommands();
     this.loadChampions();    
   }
 
@@ -75,11 +70,37 @@ export class Ozone {
       this.champions[championID] = tempChampion;
       this.champions[championID].createDM();
 
-      cron.schedule(`0 12 * * *`, () => {
-        this.sendTodaysWeather(this.champions[championID]);
+      cron.schedule(`30 11 * * *`, async () => {
+        this.send(this.champions[championID], await sendTodaysWeather());
       });
 
       this.sendOnReady(this.champions[championID]);
+    });
+  }
+
+  private async loadCommands() {
+    const prefix = "!";
+    this.bot.on("message", async (message: Message) => {
+      if(!message.content.startsWith(prefix)) {
+        return;
+      }
+
+      // slices off prefix from our message, then trims extra whitespace, then returns our array of words from the message
+      const args = message.content.slice(prefix.length).trim().split(' ');
+    
+      // splits off the first word from the array, which will be our command
+      const command = args.shift().toLowerCase();
+
+      switch(command) {
+        case "test":
+          message.reply("Test successful! Go us");
+          break;
+        case "weather":
+          message.reply(await sendTodaysWeather());
+          break;
+        default:
+          message.reply("I'm sorry, I don't recognize that command.");
+      }
     });
   }
 

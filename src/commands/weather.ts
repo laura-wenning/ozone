@@ -1,16 +1,15 @@
 
 import { User } from "discord.js";
 import { rest } from "../utilities/request";
-import { Ozone } from "./Ozone";
 
-export async function fetchTodaysWeather(this: Ozone) {
+export async function fetchTodaysWeather() {
   const API_KEY = process.env.WEATHER_API_KEY;
   if (!API_KEY) { throw "No Weather API key found." }
   const weatherResponse = await rest.get("http://api.openweathermap.org/data/2.5/weather", { q: "detroit", APPID: API_KEY});
   return weatherResponse;
 }
 
-export function kelvinToFahrenheit(this: Ozone, kelvin: number) {
+export function kelvinToFahrenheit(kelvin: number) {
   const celsius = kelvin - 273.15;
   return (celsius * (9/5)) + 32;
 }
@@ -27,7 +26,7 @@ export function weatherToReadable(
   return `Good morning! Today, the weather is ${main.toLowerCase()}. It is currently ${Math.round(temp)} degrees, and will get up to ${Math.round(high)}.`;
 }
 
-export async function sendTodaysWeather(this: Ozone, champion: User): Promise<void> {
+export async function sendTodaysWeather(): Promise<string> {
   const weather = await this.fetchTodaysWeather() as any;
   const message = this.weatherToReadable(
     weather.weather[0].main,
@@ -39,5 +38,5 @@ export async function sendTodaysWeather(this: Ozone, champion: User): Promise<vo
     weather.wind.speed,
   );
 
-  this.send(champion, message);
+  return message;
 }
