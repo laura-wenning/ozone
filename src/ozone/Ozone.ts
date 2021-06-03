@@ -98,8 +98,6 @@ export class Ozone {
         case "weather":
           message.reply(await sendTodaysWeather());
           break;
-        default:
-          message.reply("I'm sorry, I don't recognize that command.");
       }
     });
   }

@@ -1,5 +1,4 @@
 
-import { User } from "discord.js";
 import { rest } from "../utilities/request";
 
 export async function fetchTodaysWeather() {
