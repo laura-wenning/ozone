@@ -1,10 +1,20 @@
 version: '3'
 services:
   ozone:
-    container_name: ozone
+    container_name: ozone${POSTFIX}
     image: ozone:latest
     restart: always
     ports:
-      - ${PORT}:${PORT}
+      - ${NODE_PORT}:3000
+    environment:
+     - PORT=3000
     env_file:
      - .env
+
+  ozone-db:
+    container_name: ozone-db${POSTFIX}
+    image: mongo:latest
+    env_file:
+      - .mongo.env
+    ports:
+      - ${MONGO_PORT}:27017
