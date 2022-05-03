@@ -4,8 +4,9 @@
   "private": true,
   "main": "dist/app.js",
   "scripts": {
-    "dev": "tsc && node dist/app.js",
-    "nodemon": "nodemon -V -w src -e ts,tsx -x \"yarn dev\"",
+    "start": "node dist/app.js",
+    "dev": "nodemon -V -w src -e ts,tsx -x \"yarn build && yarn start\"",
+    "build": "tsc",
     "compose": "yarn install && yarn nodemon"
   },
   "dependencies": {
