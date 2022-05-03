@@ -1,12 +1,20 @@
 version: '3'
 services:
   ozone:
-    image: node:12
-    command: yarn dev
+    container_name: ozone${POSTFIX}
+    image: ozone:latest
+    restart: always
     ports:
-      - ${PORT}:${PORT}
-    volumes:
-      - ./:/usr/src/app/
-    working_dir: /usr/src/app/
+      - ${NODE_PORT}:3000
+    environment:
+     - PORT=3000
     env_file:
      - .env
+
+  ozone-db:
+    container_name: ozone-db${POSTFIX}
+    image: mongo:latest
+    env_file:
+      - .mongo.env
+    ports:
+      - ${MONGO_PORT}:27017
