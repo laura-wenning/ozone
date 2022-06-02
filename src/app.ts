@@ -12,12 +12,16 @@ app.get('/', (req, res) => {
   res.send('Hello! Everything is running as it should.');
 });
 
+app.post('/push-gateway', () => {
+  const channelID = "971241123198677002";
+});
+
 app.listen(port, async (err) => {
   if (err) {
     return console.error(err);
   }
   
-  ozone = new Ozone();
+  ozone = new Ozone(); // TODO - can we make this not a class? 
 
   return console.log(`server is listening on ${port}`);
 });
