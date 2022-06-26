@@ -9,3 +9,7 @@ src/config/*
 
 # The configuration file for secrets
 config.json
+
+# Added by cargo
+
+/target
