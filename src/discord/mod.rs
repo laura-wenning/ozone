@@ -3,6 +3,7 @@ use std::env;
 use serenity::async_trait;
 use serenity::model::channel::Message;
 use serenity::model::gateway::Ready;
+use serenity::model::id::ChannelId;
 use serenity::prelude::*;
 
 // const PREFIX = "~";
@@ -25,14 +26,20 @@ impl EventHandler for Handler {
   /**
    * Handles the 'ready' event when the Bot is ready to go
    */
-  async fn ready(&self, _: Context, ready: Ready) {
-    println!("{} is connected!", ready.user.name)
+  async fn ready(&self, ctx: Context, ready: Ready) {
+    println!("{} is connected!", ready.user.name);
+    let channel_id = ChannelId(971241123198677002);
+    
+    if let Err(why) = channel_id.send_message(&ctx.http, |m| { m.content("I'm back!") }).await {
+      println!("Could not send startup message :(. See: {:?}", why);
+    };
+    // let message = Message::builder().channel_id(channel_id).
   }
 }
 
 #[tokio::main]
-pub async fn start_discord_bot() -> Client {
-  let token = env::var("OZONE_TOKEN").expect("The 'OZONE_TOKEN' environment variable must be set");
+pub async fn start() -> Client {
+  let token = env::var("DISCORD_TOKEN").expect("The 'DISCORD_TOKEN' environment variable must be set");
 
   // Intents describes what events the bot will be notified about
   let intents = GatewayIntents::DIRECT_MESSAGES | GatewayIntents::MESSAGE_CONTENT;

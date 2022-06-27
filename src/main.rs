@@ -1,6 +1,7 @@
 use dotenv;
 
 pub mod discord;
+pub mod glean;
 // use crate::discord;
 
 fn main() {
@@ -8,5 +9,6 @@ fn main() {
   
   // discord::
   println!("Run!");
-  discord::start_discord_bot();
+  glean::weather::get_hourly(15.51, -32.1);
+  discord::start();
 }
