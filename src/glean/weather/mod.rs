@@ -1,31 +1,29 @@
 use std::env;
 use std::sync::Once;
+use reqwest::Error;
 
-pub struct Weather {
-  main: String,
-  description: String,
-  temp: f32,
-  feels_like: f32,
-  high: f32,
-  low: f32,
-  wind: f32,
-}
+mod model;
+
 
 static mut APP_KEY: Option<String> = None;
 static INIT: Once = Once::new();
 
-pub fn get_hourly(lat: f32, long: f32) {
+#[tokio::main]
+pub async fn get_hourly(lat: f32, long: f32) -> Result<(), Error> {
   let app_key = get_app_key();
   let url = format!(
-    "https://pro.openweathermap.org/data/2.5/forecast/hourly?lat={}&lon={}&appid={}",
+    "https://pro.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid={}",
     lat,
     long,
     app_key
-  ); //count {
-  //   Some(x) -> x;
-  //   None: "";
-  // }
+  ); 
+  
   println!("Weather URL: {}", url);
+  let response = reqwest::get(&url).await?;
+  let raw_weather: model::WeatherResponse = response.json().await?;
+  // print!(response);
+  // Ok(raw_weather);
+  return Ok(());
 }
 
 fn get_app_key() -> String {
