@@ -1,23 +1,34 @@
-require("dotenv").config()
+// require("dotenv").config()
+import dotenv from "dotenv";
+import { createServer } from "http";
+import next from "next";
+import { parse } from "url";
+import { Ozone } from './discord/Ozone';
 
-import express from 'express';
-import { Ozone } from './ozone/Ozone';
+// Load in environment variables on development only
+if (process.env.NODE_ENV === "development") {
+  dotenv.config();
+}
 
-const app = express();
-const port = process.env.PORT; 
+const isDev = process.env.NODE_ENV !== "production";
+const port = process.env.PORT || "3000"; 
 
-let ozone = null;
+const app = next({ dev: isDev });
+const handle = app.getRequestHandler();
 
-app.get('/', (req, res) => {
-  res.send('Hello! Everything is running as it should.');
-});
+let ozone;
 
-app.listen(port, async (err) => {
-  if (err) {
-    return console.error(err);
-  }
-  
+app.prepare().then(() => {
+  createServer(async (req, res) => {
+    const parsedUrl = parse(req.url!, true);
+    handle(req, res, parsedUrl);
+  }).listen(port);
+
   ozone = new Ozone();
 
-  return console.log(`server is listening on ${port}`);
+  console.log(
+    `> Server listening at http://localhost:${port} as ${
+      isDev ? 'development' : process.env.NODE_ENV
+    }`
+  )
 });
