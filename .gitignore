@@ -1,11 +1,15 @@
 .next/
 dist/
 node_modules/
-src/config/*
-!src/config/.keep
+config/*
+!config/.keep
 
 *.env
 *.log
 
 # The configuration file for secrets
 config.json
+
+# Files from a possible rust conversion in the future
+.cache/
+target/

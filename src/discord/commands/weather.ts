@@ -1,5 +1,6 @@
+import { rest } from "../../utilities/request";
 
-import { rest } from "../utilities/request";
+
 
 export async function fetchTodaysWeather() {
   const API_KEY = process.env.WEATHER_API_KEY;
