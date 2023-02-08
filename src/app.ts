@@ -24,7 +24,10 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   }).listen(port);
 
-  ozone = new Ozone();
+  console.log(`Discord Connection: ${process.env.ENABLE_DISCORD_BOT === "1" ? "Enabled" : "Disabled"}`);
+  if (process.env.ENABLE_DISCORD_BOT === "1") {
+    ozone = new Ozone();
+  }
 
   console.log(
     `> Server listening at http://localhost:${port} as ${
