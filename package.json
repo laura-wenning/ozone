@@ -9,6 +9,8 @@
     "compose": "yarn install && yarn nodemon"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.7",
+    "apollo-server-micro": "^3.11.1",
     "cross-fetch": "^3.1.5",
     "discord.js": "12.5.3",
     "dotenv": "^8.2.0",
