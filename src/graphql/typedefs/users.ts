@@ -6,7 +6,8 @@ export const userTypeDefs = gql`
     id: String
     displayName: String
 
-    posts: [Post]! @relation
+    posts: [Post]!
+    discordAccounts: [DiscordAccount]!
   }
 
    # Input for asking for nested fields to return

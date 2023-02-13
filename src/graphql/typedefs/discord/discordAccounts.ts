@@ -3,7 +3,7 @@ import { gql } from "apollo-server-micro";
 export const discordAccountTypeDefs = gql`
   type DiscordAccount {
     id: String! # The UUID of the discord account in the database
-    ownerID: User! # The user who owns this account
+    owner: User! # The user who owns this account
 
     discordID: Number! # The ID of this user in Discord
     tagName: String! # The tag name of the user in Discord
