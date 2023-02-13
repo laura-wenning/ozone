@@ -1,7 +1,9 @@
 import { Client, Message, User } from "discord.js";
 import cron from "node-cron";
 import { sendTodaysWeather } from "./commands/weather";
-import champions from "../../config/champions.json";
+// import champions from "../../config/champions.json";
+
+const champions: string[] = [];
 
 export enum DeploymentEnum {
   DEV,
