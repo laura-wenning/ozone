@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tag1000",
+    "name": "Cyri Garneaux",
+    "type": "character",
+    "description": "A noblewoman with a rebellious streak and a love of exploration and investigation"
+  },
+  {
+    "id": "tag1001",
+    "name": "Rhiannon Byrne",
+    "type": "character",
+    "description": "A pious dhampir torn between her nature and her calling to be a paladin of Soleil"
+  },
+  {
+    "id": "tag1002",
+    "name": "Pont Venteux",
+    "type": "location",
+    "description": "A city in the Tetrarchy known for it's many bridges and overhead leyline"
+  }
+]
