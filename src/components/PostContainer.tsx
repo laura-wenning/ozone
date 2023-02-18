@@ -1,7 +1,15 @@
 import React from "react";
+import * as posts from '../../public/data/posts.json'; 
+import { Post } from "./Post";
 
-const PostContainer = () => {
+export const PostContainer = () => {
     return(
-        <div></div>
+        <div>
+            {posts.map((post)=>{
+                return(
+                    <Post content = {post.content}/>
+                )
+            })}
+        </div>
     )
 }
