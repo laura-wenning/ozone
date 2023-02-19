@@ -1,4 +1,4 @@
-import discordAccounts from "../../../../public/data/discordAccounts.json";
+import discordAccountsData from "../../../../public/data/discordAccounts.json";
 
 interface DiscordAccountInclude {
 
@@ -25,8 +25,8 @@ interface GetDiscordAccountArguments {
  * @param include Any related documents to include 
  * @returns An array of discordAccounts matching the given criteria
  */
-async function getDiscordAccounts(_: unknown, { where, include }: GetDiscordAccountsArguments) {
-  return discordAccounts;
+async function discordAccounts(_: unknown, { where, include }: GetDiscordAccountsArguments) {
+  return discordAccountsData;
 }
 
 /**
@@ -35,8 +35,8 @@ async function getDiscordAccounts(_: unknown, { where, include }: GetDiscordAcco
  * @param include Any related documents to include 
  * @returns A discordAccount document. Null if none is found
  */
-async function getDiscordAccount(_: unknown, { id, include }: GetDiscordAccountArguments) {
-  for (const discordAccount of discordAccounts) {
+async function discordAccount(_: unknown, { id, include }: GetDiscordAccountArguments) {
+  for (const discordAccount of discordAccountsData) {
     if (discordAccount.id === id) { return discordAccount; }
   }
   return null;
@@ -44,7 +44,7 @@ async function getDiscordAccount(_: unknown, { id, include }: GetDiscordAccountA
 
 export const discordAccountResolvers = {
   Query: {
-    getDiscordAccounts,
-    getDiscordAccount,
+    discordAccounts,
+    discordAccount,
   }
 }

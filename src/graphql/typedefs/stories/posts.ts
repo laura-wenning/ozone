@@ -3,7 +3,7 @@ import { gql } from "apollo-server-micro";
 export const postTypeDefs = gql`
   # Describes a single post within a story, usually one to three paragraphs
   type Post {
-    id: String! # The UUID of the post
+    id: ID! # The UUID of the post
     scene: Scene # The ID of the scene that this post belongs to
     discordAuthor: DiscordAccount! # The ID of the Discord user who posted this
 
@@ -19,23 +19,25 @@ export const postTypeDefs = gql`
   }
 
   input PostWhere {
-
+    sceneID: String
+    discordAuthorID: ID
+    isBorder: Boolean
   }
 
   input MutatePost {
     sceneID: String
-    discordAuthorID: String
+    discordAuthorID: ID
     name: String
     summary: String
   }
 
   type Query {
     posts(where: PostWhere, include: PostInclude): [Post]!
-    post(id: String!, include: PostInclude): Post
+    post(id: ID!, include: PostInclude): Post
   }
 
   type Mutation {
-    mutatePost(id: String!, post: MutatePost!, include: PostInclude): Post!
-    deletePost(id: String!): Post!
+    mutatePost(id: ID!, post: MutatePost!, include: PostInclude): Post!
+    deletePost(id: ID!): Post!
   }
 `;

@@ -1,4 +1,4 @@
-import scenes from "../../../../public/data/scenes.json";
+import scenesData from "../../../../public/data/scenes.json";
 
 interface SceneInclude {
 
@@ -26,8 +26,8 @@ interface GetSceneArguments {
  * @param include Any related documents to include 
  * @returns An array of scenes matching the given criteria
  */
-async function getScenes(_: unknown, { where, include }: GetScenesArguments) {
-  return scenes;
+async function scenes(_: unknown, { where, include }: GetScenesArguments) {
+  return scenesData;
 }
 
 /**
@@ -36,8 +36,8 @@ async function getScenes(_: unknown, { where, include }: GetScenesArguments) {
  * @param include Any related documents to include 
  * @returns A scene document. Null if none is found
  */
-async function getScene(_: unknown, { id, include }: GetSceneArguments) {
-  for (const scene of scenes) {
+async function scene(_: unknown, { id, include }: GetSceneArguments) {
+  for (const scene of scenesData) {
     if (scene.id === id) { return scene; }
   }
   return null;
@@ -45,7 +45,7 @@ async function getScene(_: unknown, { id, include }: GetSceneArguments) {
 
 export const sceneResolvers = {
   Query: {
-    getScenes,
-    getScene,
+    scenes,
+    scene,
   }
 }

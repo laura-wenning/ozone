@@ -3,12 +3,12 @@ import { gql } from "apollo-server-micro";
 export const universeTypeDefs = gql`
   # Describes a fictional world or universe that stories take place in
   type Universe {
-    id: String!
+    id: ID!
     name: String! # The name of this universe
     summary: String! # A summary/description of this universe
 
-    tags: [Tag]! @relation
-    arcs: [Universe]! @relation
+    tags: [Tag!]!
+    arcs: [Universe!]!
   }
 
   # Input for asking for nested fields to return
@@ -18,7 +18,7 @@ export const universeTypeDefs = gql`
   }
 
   input UniverseWhere {
-    
+    name: String
   }
 
   input CreateUniverse {
@@ -34,12 +34,12 @@ export const universeTypeDefs = gql`
 
   type Query {
     universes(where: UniverseWhere, include: UniverseInclude): [Universe]!
-    universe(id: String!, include: UniverseInclude): Universe
+    universe(id: ID!, include: UniverseInclude): Universe
   }
 
   type Mutation {
     createUniverse(arc: CreateUniverse!, include: UniverseInclude): Universe!
-    mutateUniverse(id: String!, arc: MutateUniverse!, include: UniverseInclude): Universe!
-    deleteUniverse(id: String!): Universe!
+    mutateUniverse(id: ID!, arc: MutateUniverse!, include: UniverseInclude): Universe!
+    deleteUniverse(id: ID!): Universe!
   }
 `;

@@ -3,7 +3,7 @@ import { gql } from "apollo-server-micro";
 export const sceneTypeDefs = gql`
   # Describes a collection of posts into a scene
   type Scene {
-    id: String! # The UUID of this scene in the database
+    id: ID! # The UUID of this scene in the database
     arc: Scene # The arc that this scene belongs to
     universe: Universe # The world that this scene belongs to
     
@@ -11,7 +11,7 @@ export const sceneTypeDefs = gql`
     summary: String! # A summary/description of this scene
 
     posts: [Post]!
-    tags: [Tags]! @relation
+    tags: [Tag]!
   }
 
   # Input for asking for nested fields to return
@@ -22,28 +22,33 @@ export const sceneTypeDefs = gql`
     tags: Boolean
   }
 
+  input SceneWhere {
+    arcID: ID
+    name: String
+  }
+
   input CreateScene {
-    arcID: String
-    universeID: String
+    arcID: ID
+    universeID: ID
     name: String!
     summary: String!
   }
 
   input MutateScene {
-    arcID: String
-    universeID: String
+    arcID: ID
+    universeID: ID
     name: String
     summary: String
   }
 
   type Query {
     scenes(where: SceneWhere, include: SceneInclude): [Scene]!
-    scene(id: String!, include: SceneInclude): Scene
+    scene(id: ID!, include: SceneInclude): Scene
   }
 
   type Mutation {
     createScene(scene: CreateScene!, include: SceneInclude): Scene!
-    mutateScene(id: String!, scene: MutateScene!, include: SceneInclude): Scene!
-    deleteScene(id: String!): Scene!
+    mutateScene(id: ID!, scene: MutateScene!, include: SceneInclude): Scene!
+    deleteScene(id: ID!): Scene!
   }
 `;

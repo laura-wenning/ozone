@@ -3,7 +3,7 @@ import { gql } from "apollo-server-micro";
 export const arcTypeDefs = gql`
   # Describes a story arc, with multiple scenes telling a longer story
   type Arc {
-    id: String! # The UUID of this arc in the database
+    id: ID! # The UUID of this arc in the database
     universe: Universe # The universe/world that this arc belongs to
 
     name: String! # The name of this arc
@@ -19,11 +19,12 @@ export const arcTypeDefs = gql`
   }
 
   input ArcWhere {
-
+    universeID: ID
+    name: String
   }
 
   input CreateArc {
-    universeID: String
+    universeID: ID
     name: String!
     summary: String!
   }
@@ -36,12 +37,12 @@ export const arcTypeDefs = gql`
 
   type Query {
     arcs(where: ArcWhere, include: ArcInclude): [Arc]!
-    arc(id: String!, include: ArcInclude): Arc
+    arc(id: ID!, include: ArcInclude): Arc
   }
 
   type Mutation {
     createArc(arc: CreateArc!, include: ArcInclude): Arc!
-    mutateArc(id: String!, arc: MutateArc!, include: ArcInclude): Arc!
-    deleteArc(id: String!): Arc!
+    mutateArc(id: ID!, arc: MutateArc!, include: ArcInclude): Arc!
+    deleteArc(id: ID!): Arc!
   }
 `;

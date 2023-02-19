@@ -1,4 +1,4 @@
-import tags from "../../../../public/data/tags.json";
+import tagsData from "../../../../public/data/tags.json";
 
 interface TagInclude {
 
@@ -26,8 +26,8 @@ interface GetTagArguments {
  * @param include Any related documents to include 
  * @returns An array of tags matching the given criteria
  */
-async function getTags(_: unknown, { where, include }: GetTagsArguments) {
-  return tags;
+async function tags(_: unknown, { where, include }: GetTagsArguments) {
+  return tagsData;
 }
 
 /**
@@ -36,8 +36,8 @@ async function getTags(_: unknown, { where, include }: GetTagsArguments) {
  * @param include Any related documents to include 
  * @returns A tag document. Null if none is found
  */
-async function getTag(_: unknown, { id, include }: GetTagArguments) {
-  for (const tag of tags) {
+async function tag(_: unknown, { id, include }: GetTagArguments) {
+  for (const tag of tagsData) {
     if (tag.id === id) { return tag; }
   }
   return null;
@@ -45,7 +45,7 @@ async function getTag(_: unknown, { id, include }: GetTagArguments) {
 
 export const tagResolvers = {
   Query: {
-    getTags,
-    getTag,
+    tags,
+    tag,
   }
 }

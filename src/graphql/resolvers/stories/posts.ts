@@ -1,11 +1,13 @@
-import posts from "../../../../public/data/posts.json";
+import postsData from "../../../../public/data/posts.json";
+import discordAuthorData from "../../../../public/data/discordAccounts.json";
+import sceneData from "../../../../public/data/scenes.json";
 
 interface PostInclude {
-
+  discordAuthor?: boolean;
+  scene?: boolean;
 }
 
 interface PostWhere {
-  id?: string;
   sceneID?: string;
   discordAuthorID?: string;
   isBorder?: boolean;
@@ -27,8 +29,30 @@ interface GetPostArguments {
  * @param include Any related documents to include 
  * @returns An array of posts matching the given criteria
  */
-async function getPosts(_: unknown, { where, include }: GetPostsArguments) {
-  return posts;
+async function posts(_: unknown, { where, include }: GetPostsArguments) {
+  if (!include.discordAuthor && !include.scene) { return postsData; }
+  
+  const newData = [];
+  for (const postData of postsData) {
+    const data = {...postData};
+    if (include.discordAuthor) {
+      for (const discordAuthor of discordAuthorData) {
+        if (data.discordAuthorID === discordAuthor.id) {
+          data.discordAuthor = discordAuthor;
+        }
+      }
+    }
+
+    if (include.scene) {
+      for (const scene of sceneData) {
+        if (data.sceneID === scene.id) {
+          data.scene = scene;
+        }
+      }
+    }
+  }
+
+  return postsData;
 }
 
 /**
@@ -37,8 +61,8 @@ async function getPosts(_: unknown, { where, include }: GetPostsArguments) {
  * @param include Any related documents to include 
  * @returns A post document. Null if none is found
  */
-async function getPost(_: unknown, { id, include }: GetPostArguments) {
-  for (const post of posts) {
+async function post(_: unknown, { id, include }: GetPostArguments) {
+  for (const post of postsData) {
     if (post.id === id) { return post; }
   }
   return null;
@@ -46,7 +70,7 @@ async function getPost(_: unknown, { id, include }: GetPostArguments) {
 
 export const postResolvers = {
   Query: {
-    getPosts,
-    getPost,
+    posts,
+    post,
   }
 }

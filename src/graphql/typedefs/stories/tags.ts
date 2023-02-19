@@ -11,7 +11,7 @@ export const tagTypeDefs = gql`
 
   # Describes reuseable tags that can be applied to scenes, arcs, or universes
   type Tag {
-    id: String!
+    id: ID!
 
     name: String !# The name of the tag
     type: TagType! # The type of tag that this is
@@ -31,6 +31,11 @@ export const tagTypeDefs = gql`
     universes: Boolean
   }
 
+  input TagWhere {
+    name: String
+    type: String
+  }
+
   input CreateTag {
     name: String!
     type: String!
@@ -45,13 +50,13 @@ export const tagTypeDefs = gql`
 
   type Query {
     tags(where: TagWhere, include: TagInclude): [Tag]!
-    tag(id: String!, include: TagInclude): Tag
+    tag(id: ID!, include: TagInclude): Tag
   }
 
   type Mutation {
     createTag(tag: CreateTag!, include: TagInclude): Tag!
-    mutateTag(id: String!, tag: MutateTag!, include: TagInclude): Tag!
-    deleteTag(id: String!): Tag!
+    mutateTag(id: ID!, tag: MutateTag!, include: TagInclude): Tag!
+    deleteTag(id: ID!): Tag!
   }
 
 `;

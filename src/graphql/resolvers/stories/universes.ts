@@ -1,4 +1,4 @@
-import universes from "../../../../public/data/universes.json";
+import universesData from "../../../../public/data/universes.json";
 
 interface UniverseInclude {
 
@@ -25,8 +25,8 @@ interface GetUniverseArguments {
  * @param include Any related documents to include 
  * @returns An array of universes matching the given criteria
  */
-async function getUniverses(_: unknown, { where, include }: GetUniversesArguments) {
-  return universes;
+async function universes(_: unknown, { where, include }: GetUniversesArguments) {
+  return universesData;
 }
 
 /**
@@ -35,8 +35,8 @@ async function getUniverses(_: unknown, { where, include }: GetUniversesArgument
  * @param include Any related documents to include 
  * @returns A universe document. Null if none is found
  */
-async function getUniverse(_: unknown, { id, include }: GetUniverseArguments) {
-  for (const universe of universes) {
+async function universe(_: unknown, { id, include }: GetUniverseArguments) {
+  for (const universe of universesData) {
     if (universe.id === id) { return universe; }
   }
   return null;
@@ -44,7 +44,7 @@ async function getUniverse(_: unknown, { id, include }: GetUniverseArguments) {
 
 export const universeResolvers = {
   Query: {
-    getUniverses,
-    getUniverse,
+    universes,
+    universe,
   }
 }

@@ -1,4 +1,4 @@
-import arcs from "../../../../public/data/arcs.json";
+import arcsData from "../../../../public/data/arcs.json";
 
 interface ArcInclude {
 
@@ -26,8 +26,8 @@ interface GetArcArguments {
  * @param include Any related documents to include 
  * @returns An array of arcs matching the given criteria
  */
-async function getArcs(_: unknown, { where, include }: GetArcsArguments) {
-  return arcs;
+async function arcs(_: unknown, { where, include }: GetArcsArguments) {
+  return arcsData;
 }
 
 /**
@@ -36,8 +36,8 @@ async function getArcs(_: unknown, { where, include }: GetArcsArguments) {
  * @param include Any related documents to include 
  * @returns A arc document. Null if none is found
  */
-async function getArc(_: unknown, { id, include }: GetArcArguments) {
-  for (const arc of arcs) {
+async function arc(_: unknown, { id, include }: GetArcArguments) {
+  for (const arc of arcsData) {
     if (arc.id === id) { return arc; }
   }
   return null;
@@ -45,7 +45,7 @@ async function getArc(_: unknown, { id, include }: GetArcArguments) {
 
 export const arcResolvers = {
   Query: {
-    getArcs,
-    getArc,
+    arcs,
+    arc,
   }
 }

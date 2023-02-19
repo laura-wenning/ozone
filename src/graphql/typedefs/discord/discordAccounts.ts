@@ -2,14 +2,14 @@ import { gql } from "apollo-server-micro";
 
 export const discordAccountTypeDefs = gql`
   type DiscordAccount {
-    id: String! # The UUID of the discord account in the database
+    id: ID! # The UUID of the discord account in the database
     owner: User! # The user who owns this account
 
-    discordID: Number! # The ID of this user in Discord
+    discordID: Int! # The ID of this user in Discord
     tagName: String! # The tag name of the user in Discord
-    tagNumber: Number! # The tag number of the user in Discord
+    tagNumber: Int! # The tag number of the user in Discord
 
-    posts: [Post]!
+    posts: [Post!]!
   }
 
   # Input for asking for nested fields to return
@@ -19,11 +19,11 @@ export const discordAccountTypeDefs = gql`
   }
 
   input DiscordAccountWhere {
-    
+    displayName: String
   }
 
   type Query {
-    discordAccounts(where: DiscordAccountWhere, include: DiscordAccountInclude): [DiscordAccount]!
-    discordAccount(id: String!, include: UserInclude): User
+    discordAccounts(where: DiscordAccountWhere, include: DiscordAccountInclude): [DiscordAccount]
+    discordAccount(id: ID!, include: UserInclude): User
   }
 `;

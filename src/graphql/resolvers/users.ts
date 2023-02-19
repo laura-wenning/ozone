@@ -1,4 +1,4 @@
-import users from "../../../public/data/users.json";
+import usersData from "../../../public/data/users.json";
 
 interface UserInclude {
 
@@ -25,8 +25,8 @@ interface GetUserArguments {
  * @param include Any related documents to include 
  * @returns An array of users matching the given criteria
  */
-async function getUsers(_: unknown, { where, include }: GetUsersArguments) {
-  return users;
+async function users(_: unknown, { where, include }: GetUsersArguments) {
+  return usersData;
 }
 
 /**
@@ -35,8 +35,8 @@ async function getUsers(_: unknown, { where, include }: GetUsersArguments) {
  * @param include Any related documents to include 
  * @returns A user document. Null if none is found
  */
-async function getUser(_: unknown, { id, include }: GetUserArguments) {
-  for (const user of users) {
+async function user(_: unknown, { id, include }: GetUserArguments) {
+  for (const user of usersData) {
     if (user.id === id) { return user; }
   }
   return null;
@@ -44,7 +44,7 @@ async function getUser(_: unknown, { id, include }: GetUserArguments) {
 
 export const userResolvers = {
   Query: {
-    getUsers,
-    getUser,
+    users,
+    user,
   }
 }
