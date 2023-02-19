@@ -1,6 +1,6 @@
 import { gql } from "apollo-server-micro";
 
-export const scenesTypeDefs = gql`
+export const sceneTypeDefs = gql`
   # Describes a collection of posts into a scene
   type Scene {
     id: String! # The UUID of this scene in the database

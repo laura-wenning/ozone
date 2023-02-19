@@ -2,18 +2,16 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-micro";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { NextApiRequest, NextApiResponse } from "next";
+import { gqlTypeDefs } from "../../graphql/typedefs";
+import { gqlResolvers } from "../../graphql/resolvers";
 
 global.fetch = require("cross-fetch");
 
 // TODO - figure out how to better handle this server. Possibly link with the main server
 const apolloServer = new ApolloServer({
   // schema,
-  typeDefs: [
-    
-  ],
-  resolvers: [
-    
-  ],
+  typeDefs: gqlTypeDefs,
+  resolvers: gqlResolvers,
   plugins: [
     ApolloServerPluginLandingPageGraphQLPlayground(),
   ],

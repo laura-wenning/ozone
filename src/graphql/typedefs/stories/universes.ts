@@ -1,6 +1,6 @@
 import { gql } from "apollo-server-micro";
 
-export const UniverseTypeDefs = gql`
+export const universeTypeDefs = gql`
   # Describes a fictional world or universe that stories take place in
   type Universe {
     id: String!

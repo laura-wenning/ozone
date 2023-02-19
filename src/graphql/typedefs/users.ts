@@ -1,8 +1,8 @@
 import { gql } from "apollo-server-micro";
 
-// Universes are people who are able to log in an access Ozone
+// Users are people who are able to log in and access Ozone
 export const userTypeDefs = gql`
-  type Universe {
+  type User {
     id: String
     displayName: String
 
