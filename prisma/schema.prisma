@@ -45,10 +45,10 @@ model Arc {
 model Post {
   id  String @id @default(uuid()) @db.Uuid
   
-  sceneID   String?
+  sceneID   String? @db.Uuid
   scene     Scene? @relation(name: "postScene", fields: [sceneID], references: [id])
 
-  discordAuthorID   String
+  discordAuthorID   String @db.Uuid
   discordAuthor     DiscordAccount  @relation(name: "postDiscordAuthor", fields: [discordAuthorID], references: [id])
 
   content   String  @db.Text
@@ -61,7 +61,7 @@ model Post {
 model Scene {
   id  String @id @default(uuid()) @db.Uuid
 
-  arcID   String?
+  arcID   String? @db.Uuid
   arc     Arc?  @relation(name: "arcScenes", fields: [arcID], references: [id])
 
   name  String  @db.VarChar(100)
