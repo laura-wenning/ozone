@@ -1,4 +1,6 @@
-import usersData from "../../../public/data/users.json";
+import { getPrismaClient } from "utilities/server/prisma";
+
+const prisma = getPrismaClient();
 
 interface UserInclude {
 
@@ -26,7 +28,10 @@ interface GetUserArguments {
  * @returns An array of users matching the given criteria
  */
 async function users(_: unknown, { where, include }: GetUsersArguments) {
-  return usersData;
+  return prisma.user.findMany({
+    where: { ...where },
+    include,
+  });
 }
 
 /**
@@ -36,10 +41,7 @@ async function users(_: unknown, { where, include }: GetUsersArguments) {
  * @returns A user document. Null if none is found
  */
 async function user(_: unknown, { id, include }: GetUserArguments) {
-  for (const user of usersData) {
-    if (user.id === id) { return user; }
-  }
-  return null;
+  return prisma.user.findUnique({ where: { id }, include });
 }
 
 export const userResolvers = {

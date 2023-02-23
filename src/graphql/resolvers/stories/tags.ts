@@ -1,13 +1,15 @@
-import tagsData from "../../../../public/data/tags.json";
+import { TagType } from "@prisma/client";
+import { getPrismaClient } from "utilities/server/prisma";
+
+const prisma = getPrismaClient();
 
 interface TagInclude {
 
 }
 
 interface TagWhere {
-  id?: string;
   name?: string;
-  type?: string;
+  type?: TagType;
 }
 
 interface GetTagsArguments {
@@ -27,7 +29,10 @@ interface GetTagArguments {
  * @returns An array of tags matching the given criteria
  */
 async function tags(_: unknown, { where, include }: GetTagsArguments) {
-  return tagsData;
+  return prisma.tag.findMany({
+    where: { ...where },
+    include,
+  });
 }
 
 /**
@@ -37,10 +42,7 @@ async function tags(_: unknown, { where, include }: GetTagsArguments) {
  * @returns A tag document. Null if none is found
  */
 async function tag(_: unknown, { id, include }: GetTagArguments) {
-  for (const tag of tagsData) {
-    if (tag.id === id) { return tag; }
-  }
-  return null;
+  return prisma.tag.findUnique({ where: { id }, include });
 }
 
 export const tagResolvers = {

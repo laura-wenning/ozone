@@ -1,6 +1,6 @@
-import postsData from "../../../../public/data/posts.json";
-import discordAuthorData from "../../../../public/data/discordAccounts.json";
-import sceneData from "../../../../public/data/scenes.json";
+import { getPrismaClient } from "utilities/server/prisma";
+
+const prisma = getPrismaClient();
 
 interface PostInclude {
   discordAuthor?: boolean;
@@ -30,29 +30,10 @@ interface GetPostArguments {
  * @returns An array of posts matching the given criteria
  */
 async function posts(_: unknown, { where, include }: GetPostsArguments) {
-  if (!include.discordAuthor && !include.scene) { return postsData; }
-  
-  const newData = [];
-  for (const postData of postsData) {
-    const data = {...postData};
-    if (include.discordAuthor) {
-      for (const discordAuthor of discordAuthorData) {
-        if (data.discordAuthorID === discordAuthor.id) {
-          data.discordAuthor = discordAuthor;
-        }
-      }
-    }
-
-    if (include.scene) {
-      for (const scene of sceneData) {
-        if (data.sceneID === scene.id) {
-          data.scene = scene;
-        }
-      }
-    }
-  }
-
-  return postsData;
+  return prisma.post.findMany({
+    where: { ...where },
+    include,
+  });
 }
 
 /**
@@ -62,10 +43,7 @@ async function posts(_: unknown, { where, include }: GetPostsArguments) {
  * @returns A post document. Null if none is found
  */
 async function post(_: unknown, { id, include }: GetPostArguments) {
-  for (const post of postsData) {
-    if (post.id === id) { return post; }
-  }
-  return null;
+  return prisma.post.findUnique({ where: { id }, include });
 }
 
 export const postResolvers = {

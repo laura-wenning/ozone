@@ -1,4 +1,7 @@
 import scenesData from "../../../../public/data/scenes.json";
+import { getPrismaClient } from "utilities/server/prisma";
+
+const prisma = getPrismaClient();
 
 interface SceneInclude {
 
@@ -27,7 +30,10 @@ interface GetSceneArguments {
  * @returns An array of scenes matching the given criteria
  */
 async function scenes(_: unknown, { where, include }: GetScenesArguments) {
-  return scenesData;
+  return prisma.scene.findMany({
+    where: { ...where },
+    include,
+  });
 }
 
 /**
@@ -37,10 +43,7 @@ async function scenes(_: unknown, { where, include }: GetScenesArguments) {
  * @returns A scene document. Null if none is found
  */
 async function scene(_: unknown, { id, include }: GetSceneArguments) {
-  for (const scene of scenesData) {
-    if (scene.id === id) { return scene; }
-  }
-  return null;
+  return prisma.scene.findUnique({ where: { id }, include });
 }
 
 export const sceneResolvers = {

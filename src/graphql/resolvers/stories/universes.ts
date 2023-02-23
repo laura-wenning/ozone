@@ -1,4 +1,6 @@
-import universesData from "../../../../public/data/universes.json";
+import { getPrismaClient } from "utilities/server/prisma";
+
+const prisma = getPrismaClient();
 
 interface UniverseInclude {
 
@@ -26,7 +28,10 @@ interface GetUniverseArguments {
  * @returns An array of universes matching the given criteria
  */
 async function universes(_: unknown, { where, include }: GetUniversesArguments) {
-  return universesData;
+  return prisma.universe.findMany({
+    where: { ...where },
+    include,
+  });
 }
 
 /**
@@ -36,10 +41,7 @@ async function universes(_: unknown, { where, include }: GetUniversesArguments) 
  * @returns A universe document. Null if none is found
  */
 async function universe(_: unknown, { id, include }: GetUniverseArguments) {
-  for (const universe of universesData) {
-    if (universe.id === id) { return universe; }
-  }
-  return null;
+  return prisma.universe.findUnique({ where: { id }, include });
 }
 
 export const universeResolvers = {

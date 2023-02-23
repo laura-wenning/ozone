@@ -1,4 +1,6 @@
-import discordAccountsData from "../../../../public/data/discordAccounts.json";
+import { getPrismaClient } from "utilities/server/prisma";
+
+const prisma = getPrismaClient();
 
 interface DiscordAccountInclude {
 
@@ -26,7 +28,10 @@ interface GetDiscordAccountArguments {
  * @returns An array of discordAccounts matching the given criteria
  */
 async function discordAccounts(_: unknown, { where, include }: GetDiscordAccountsArguments) {
-  return discordAccountsData;
+  return prisma.discordAccount.findMany({
+    where: { ...where },
+    include,
+  });
 }
 
 /**
@@ -36,10 +41,7 @@ async function discordAccounts(_: unknown, { where, include }: GetDiscordAccount
  * @returns A discordAccount document. Null if none is found
  */
 async function discordAccount(_: unknown, { id, include }: GetDiscordAccountArguments) {
-  for (const discordAccount of discordAccountsData) {
-    if (discordAccount.id === id) { return discordAccount; }
-  }
-  return null;
+  return prisma.discordAccount.findUnique({ where: { id }, include });
 }
 
 export const discordAccountResolvers = {

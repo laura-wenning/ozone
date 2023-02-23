@@ -1,4 +1,7 @@
+import { getPrismaClient } from "utilities/server/prisma";
 import arcsData from "../../../../public/data/arcs.json";
+
+const prisma = getPrismaClient();
 
 interface ArcInclude {
 
@@ -27,7 +30,10 @@ interface GetArcArguments {
  * @returns An array of arcs matching the given criteria
  */
 async function arcs(_: unknown, { where, include }: GetArcsArguments) {
-  return arcsData;
+  return prisma.arc.findMany({
+    where: { ...where },
+    include,
+  });
 }
 
 /**
@@ -37,10 +43,7 @@ async function arcs(_: unknown, { where, include }: GetArcsArguments) {
  * @returns A arc document. Null if none is found
  */
 async function arc(_: unknown, { id, include }: GetArcArguments) {
-  for (const arc of arcsData) {
-    if (arc.id === id) { return arc; }
-  }
-  return null;
+  return prisma.arc.findUnique({ where: { id }, include });
 }
 
 export const arcResolvers = {
