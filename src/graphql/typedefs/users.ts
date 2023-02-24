@@ -29,6 +29,7 @@ export const userTypeDefs = gql`
     user(id: ID!, include: UserInclude): User
   }
 
+  # User creation and modification will come later
   # type Mutation {
     # createUser(arc: CreateUser!, include: UserInclude): User!
     # mutateUser(id: ID!, arc: MutateUser!, include: UserInclude): User!

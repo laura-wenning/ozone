@@ -39,5 +39,8 @@ export const postTypeDefs = gql`
   type Mutation {
     mutatePost(id: ID!, post: MutatePost!, include: PostInclude): Post!
     deletePost(id: ID!): Post!
+
+    tagPost(postID: ID!, tagID: ID!): Post!
+    untagPost(postID: ID!, tagID: ID!): Post!
   }
 `;

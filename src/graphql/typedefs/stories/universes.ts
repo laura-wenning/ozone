@@ -41,5 +41,8 @@ export const universeTypeDefs = gql`
     createUniverse(arc: CreateUniverse!, include: UniverseInclude): Universe!
     mutateUniverse(id: ID!, arc: MutateUniverse!, include: UniverseInclude): Universe!
     deleteUniverse(id: ID!): Universe!
+
+    tagUniverse(universeID: ID!, tagID: ID!): Universe!
+    untagUniverse(universeID: ID!, tagID: ID!): Universe!
   }
 `;

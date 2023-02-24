@@ -76,7 +76,7 @@ model Tag {
 
   name  String  @db.VarChar(100)
   type  TagType
-  description   String  @db.Text
+  description   String?  @db.Text
 
   posts   Post[]
   scenes  Scene[]

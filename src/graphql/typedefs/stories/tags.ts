@@ -39,7 +39,7 @@ export const tagTypeDefs = gql`
   input CreateTag {
     name: String!
     type: String!
-    description: String!
+    description: String
   }
 
   input MutateTag {
