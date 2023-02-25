@@ -10,12 +10,15 @@ export const postTypeDefs = gql`
     content: String! # The text content of the post
     postedAt: Date! # The datetime this post was made (UTC)
     isBorder: Boolean! # True if this is a border marker between two scenes (eg "-- scene --")
+
+    tags: [Tag]!
   }
 
   # Input for asking for nested fields to return
   input PostInclude {
     scene: Boolean
     author: Boolean
+    tags: Boolean
   }
 
   input PostWhere {
@@ -40,7 +43,7 @@ export const postTypeDefs = gql`
     mutatePost(id: ID!, post: MutatePost!, include: PostInclude): Post!
     deletePost(id: ID!): Post!
 
-    tagPost(postID: ID!, tagID: ID!): Post!
-    untagPost(postID: ID!, tagID: ID!): Post!
+    tagPost(id: ID!, tags: TagLinks!): Post!
+    untagPost(id: ID!, tags: ID!): Post!
   }
 `;

@@ -1,7 +1,7 @@
 {
   "verbose": true,
   "watch": ["src/*"],
-  "ignore": ["dist/*"],
+  "ignore": ["dist/*", "src/pages/*", "src/utilities/client/*"],
   "env": {
     "NODE_ENV": "development"
   }

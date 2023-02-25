@@ -45,7 +45,7 @@ export const arcTypeDefs = gql`
     mutateArc(id: ID!, arc: MutateArc!, include: ArcInclude): Arc!
     deleteArc(id: ID!): Arc!
 
-    tagArc(arcID: ID!, tagID: ID!): Arc!
-    untagArc(arcID: ID!, tagID: ID!): Arc!
+    tagArc(id: ID!, tags: TagLinks!): Arc!
+    untagArc(id: ID!, tags: [ID!]!): Arc!
   }
 `;

@@ -1,7 +1,6 @@
 import { isClient } from "utilities";
 import { PrismaClient } from "@prisma/client";
 
-
 let PRISMA_CLIENT: PrismaClient | undefined;
 
 /**

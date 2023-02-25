@@ -4,7 +4,8 @@ import { getPrismaClient } from "utilities/server/prisma";
 const prisma = getPrismaClient();
 
 interface UniverseInclude {
-
+  tags: boolean;
+  arcs: boolean;
 }
 
 interface UniverseWhere {
@@ -25,7 +26,6 @@ interface GetUniverseArguments {
 
 interface CreateUniverseArguments {
   universe: {
-    universeID?: string;
     name: string;
     summary: string;
   }
@@ -35,7 +35,6 @@ interface CreateUniverseArguments {
 interface MutateUniverseArguments {
   id: string;
   universe: {
-    universeID?: string;
     name?: string;
     summary?: string;
   }
@@ -167,5 +166,13 @@ export const universeResolvers = {
   Query: {
     universes,
     universe,
+  },
+  Mutation: {
+    createUniverse,
+    mutateUniverse,
+    deleteUniverse,
+
+    tagUniverse,
+    untagUniverse,
   }
 }

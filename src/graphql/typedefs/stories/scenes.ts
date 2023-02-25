@@ -51,7 +51,7 @@ export const sceneTypeDefs = gql`
     mutateScene(id: ID!, scene: MutateScene!, include: SceneInclude): Scene!
     deleteScene(id: ID!): Scene!
 
-    tagScene(sceneID: ID!, tagID: ID!): Scene!
-    untagScene(sceneID: ID!, tagID: ID!): Scene!
+    tagScene(id: ID!, tags: TagLinks!): Scene!
+    untagScene(id: ID!, tags: [ID!]!): Scene!
   }
 `;

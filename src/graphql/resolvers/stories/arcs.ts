@@ -4,7 +4,8 @@ import { getPrismaClient } from "utilities/server/prisma";
 const prisma = getPrismaClient();
 
 interface ArcInclude {
-
+  universes?: boolean;
+  scenes?: boolean;
 }
 
 interface ArcWhere {
@@ -87,7 +88,7 @@ async function createArc(_:unknown, { arc, include }: CreateArcArguments) {
     data: {
       name: arc.name,
       summary: arc.summary,
-      universe: { connect: { id: arc.universeID }},
+      universe: arc.universeID ? { connect: { id: arc.universeID }} : undefined,
     },
     include,
   });

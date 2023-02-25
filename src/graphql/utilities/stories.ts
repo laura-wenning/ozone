@@ -1,17 +1,20 @@
 import { CreateTag } from "../resolvers/stories/tags";
 
-export type IndividualTagArguments = (string | CreateTag)[];
+export interface IndividualTagArguments { 
+  connect?: string[];
+  create?: CreateTag[]
+};
 
 export function buildTagArguments(tags: IndividualTagArguments) {
   const connect: { id: string }[] = [];
   const create: CreateTag[] = [];
-  for (const tag of tags) {
-    // Tag ID 
-    if (typeof tag === "string") {
-      connect.push({ id: tag });
-    } else {
-      create.push(tag);
-    }
+
+  for (const tag of tags.connect || []) {
+    connect.push({ id: tag });
+  }
+
+  for (const tag of tags.create || []) {
+    create.push(tag);
   }
 
   const tagArguments = {

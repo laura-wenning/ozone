@@ -23,7 +23,7 @@ model DiscordAccount {
   ownerID String? @db.Uuid 
   owner   User? @relation(name: "discordAccountOwner", fields: [ownerID], references: [id])
 
-  discordID Int @unique
+  discordID String @unique
   tagName String
   tagNumber Int
 

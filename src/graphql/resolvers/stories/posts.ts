@@ -6,6 +6,7 @@ const prisma = getPrismaClient();
 interface PostInclude {
   discordAuthor?: boolean;
   scene?: boolean;
+  tags?: boolean;
 }
 
 interface PostWhere {

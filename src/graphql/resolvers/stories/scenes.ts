@@ -4,7 +4,10 @@ import { IndividualTagArguments, buildTagArguments, buildUntagArguments } from "
 const prisma = getPrismaClient();
 
 interface SceneInclude {
-
+  arc?: boolean;
+  universe?: boolean;
+  posts?: boolean;
+  tags?: boolean;
 }
 
 interface SceneWhere {
@@ -86,7 +89,7 @@ async function scene(_: unknown, { id, include }: GetSceneArguments) {
  async function createScene(_:unknown, { scene, include }: CreateSceneArguments) {
   const newScene = await prisma.scene.create({
     data: {
-      arc: { connect: { id: scene.arcID }},
+      arc: scene.arcID ? { connect: { id: scene.arcID }} : null,
       name: scene.name,
       summary: scene.summary,
     },

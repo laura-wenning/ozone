@@ -14,7 +14,7 @@ export const universeTypeDefs = gql`
   # Input for asking for nested fields to return
   input UniverseInclude {
     tags: Boolean
-    args: Boolean
+    arcs: Boolean
   }
 
   input UniverseWhere {
@@ -42,7 +42,7 @@ export const universeTypeDefs = gql`
     mutateUniverse(id: ID!, arc: MutateUniverse!, include: UniverseInclude): Universe!
     deleteUniverse(id: ID!): Universe!
 
-    tagUniverse(universeID: ID!, tagID: ID!): Universe!
-    untagUniverse(universeID: ID!, tagID: ID!): Universe!
+    tagUniverse(id: ID!, tags: TagLinks!): Universe!
+    untagUniverse(id: ID!, tags: [ID!]!): Universe!
   }
 `;

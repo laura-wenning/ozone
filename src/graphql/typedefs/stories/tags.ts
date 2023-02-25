@@ -48,6 +48,11 @@ export const tagTypeDefs = gql`
     description: String
   }
 
+  input TagLinks {
+    connect: [ID!]
+    create: [CreateTag!]
+  }
+
   type Query {
     tags(where: TagWhere, include: TagInclude): [Tag]!
     tag(id: ID!, include: TagInclude): Tag
