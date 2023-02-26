@@ -1,20 +1,23 @@
+# Development Setup
+1. Install required modules using `yarn install`
+2. Create a .env file. Refer to the environment variables section below
+3. Run `prisma generate` to create the files required for typing
+4. If using a new database, run `prisma db push` to create the database structure
+5. Run with `yarn dev`
+
 # Environment Variables
-## .env
-`POSTFIX`. A string postfixed to the end of the Docker container names for organization purposes. Use an empty string in production. 
-`NODE_PORT`. The port used by the NodeJS app or the NodeJS Docker container. 
-`MONGO_PORT`. The port used by the MongoDB container
+`NODE_ENV`. The Node Environment
+`POST`. The port used by the NodeJS app or the NodeJS Docker container. 
 
-`DEPLOYMENT`. Which sort of deployment this is. Valid options are 'deployment', 'staging', and 'production'.
+`DATABASE_URL`. The database address 
 
-`OZONE_TOKEN`. The Discord token for the Ozone bot. TODO - replace with DISCORD_TOKEN. 
-
+`DISCORD_TOKEN`. The Discord token for the Ozone bot. Required if ENABLE_DISCORD_BOT is 1
 `WEATHER_API_KEY`. The key for accessing weather data.
 
-`MONGO_USERNAME`. The username for connecting to MongoDB
-`MONGO_PASSWORD`. The password for connecting to MongoDB
-`MONGO_ADDRESS`. The endpoint that MongoDB is located at. For example, 127.0.0.1. 
-`MONGO_DB`. The name of the database to use in MongoDB.
+`POSTFIX`. A string postfixed to the end of the Docker container names for organization purposes. Use an empty string in production. This postfix will be deprecated in the future as Docker will only be used for deployment and not development.
 
-## .mongo.env
-`MONGO_INITDB_ROOT_USERNAME`. The initial root username for a first-time MongoDB launch. 
-`MONGO_INITDB_ROOT_PASSWORD`. The initial root password for a first-time MongoDB launch. 
+## Feature Flags
+`ENABLE_DISCORD_BOT`. Enables Discord bot. Allows for the bot to be disabled for frontend development. Enabled with a value of 1
+
+
+
