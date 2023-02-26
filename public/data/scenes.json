@@ -1,6 +1,8 @@
-{
-  "id": "scene1000",
-  "arcID": "arc1000",
-  "name": "Cyri, Ruth, and Georgie visit the Bank",
-  "summary": "Stuff happens where Cyri and Ruth go to the bank on errands. Georgie is a cute little weirdo"
-}
+[
+  {
+    "id": "scene1000",
+    "arcID": "arc1000",
+    "name": "Cyri, Ruth, and Georgie visit the Bank",
+    "summary": "Stuff happens where Cyri and Ruth go to the bank on errands. Georgie is a cute little weirdo"
+  }
+]

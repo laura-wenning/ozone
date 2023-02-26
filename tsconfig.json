@@ -21,7 +21,12 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "isolatedModules": true,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "utilities": ["src/utilities"],
+      "utilities/*": ["src/utilities/*"],
+    }
   },
   "lib": [
     "es2015"

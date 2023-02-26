@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id  String  @id @default(uuid()) @db.Uuid
+  displayName String
+
+  // posts Post[] @relation(name: "postAuthor")
+  discordAccounts DiscordAccount[] @relation(name: "discordAccountOwner")
+}
+
+model DiscordAccount {
+  id  String @id @default(uuid()) @db.Uuid
+  ownerID String? @db.Uuid 
+  owner   User? @relation(name: "discordAccountOwner", fields: [ownerID], references: [id])
+
+  discordID String @unique
+  tagName String
+  tagNumber Int
+
+  posts Post[]  @relation(name: "postDiscordAuthor")
+}
+
+model Arc {
+  id  String @id @default(uuid()) @db.Uuid
+  universeID  String? @db.Uuid
+  universe    Universe? @relation(name: "arcUniverse", fields: [universeID], references: [id])
+
+  name  String @db.VarChar(200)
+  summary String  @db.Text
+
+  scenes  Scene[]   @relation(name: "arcScenes")
+  tags    Tag[]
+}
+
+model Post {
+  id  String @id @default(uuid()) @db.Uuid
+  
+  sceneID   String? @db.Uuid
+  scene     Scene? @relation(name: "postScene", fields: [sceneID], references: [id])
+
+  discordAuthorID   String @db.Uuid
+  discordAuthor     DiscordAccount  @relation(name: "postDiscordAuthor", fields: [discordAuthorID], references: [id])
+
+  content   String  @db.Text
+  postedAt  DateTime
+  isBorder  Boolean
+
+  tags    Tag[]
+}
+
+model Scene {
+  id  String @id @default(uuid()) @db.Uuid
+
+  arcID   String? @db.Uuid
+  arc     Arc?  @relation(name: "arcScenes", fields: [arcID], references: [id])
+
+  name  String  @db.VarChar(100)
+  summary String  @db.Text
+
+  posts   Post[]  @relation(name: "postScene")
+  tags    Tag[]
+}
+
+model Tag {
+  id  String @id @default(uuid()) @db.Uuid
+
+  name  String  @db.VarChar(100)
+  type  TagType
+  description   String?  @db.Text
+
+  posts   Post[]
+  scenes  Scene[]
+  arcs    Arc[]
+  universes   Universe[]
+
+}
+
+model Universe {
+  id  String @id @default(uuid()) @db.Uuid
+  
+  name  String  @db.VarChar(100)
+  summary String  @db.Text
+
+  arcs  Arc[] @relation(name: "arcUniverse")
+  tags  Tag[]
+}
+
+enum TagType {
+  CHARACTER // A character
+  LOCATION // The location or setting of the scene or arc
+  EVENT // The type of event that happens, such as a fight
+  KEYWORD // A catch-all, such as "werewolf" or "Dusk Court"
+}
+
+
