@@ -5,16 +5,14 @@ services:
     image: ozone:latest
     restart: always
     ports:
-      - ${NODE_PORT}:3000
+      - ${PORT}:3000
     environment:
      - PORT=3000
     env_file:
      - .env
+    networks:
+      - database_postgres
 
-  ozone-db:
-    container_name: ozone-db${POSTFIX}
-    image: mongo:latest
-    env_file:
-      - .mongo.env
-    ports:
-      - ${MONGO_PORT}:27017
+networks:
+  database_postgres:
+    external: true

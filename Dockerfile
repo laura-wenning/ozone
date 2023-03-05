@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:16
 COPY . /usr/src/app/
 WORKDIR /usr/src/app/
 
@@ -10,7 +10,6 @@ RUN yarn build
 
 # Clean up unused code for smaller package
 # TODO - can we clean up node_modules?
-RUN rm -rf src
 
 CMD yarn start
 

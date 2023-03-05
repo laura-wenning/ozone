@@ -66,7 +66,7 @@ export class Ozone {
    */
   private async loadChampions() {
     console.log("Loading champions.")
-    champions.forEach(async (championID: string) => {
+    process.env.CHAMPIONS.split(",").forEach(async (championID: string) => {
       const tempChampion = await new User(this.bot, { id: championID });
       if (!tempChampion) { 
         console.warn(`User with ID ${championID} was not found.`);

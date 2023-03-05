@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "ts-node src/app.ts",
+    "start:prod": "docker build . -t ozone:dev && prisma db push && docker-compose up -d",
     "dev": "nodemon src/app.ts",
     "build": "tsc",
-    "compose": "yarn install && yarn nodemon",
     "prisma": "prisma generate"
   },
   "dependencies": {
