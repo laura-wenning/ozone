@@ -1,6 +1,7 @@
 import { Client, Message, User } from "discord.js";
 import cron from "node-cron";
 import { sendTodaysWeather } from "./commands/weather";
+import { attemptLogin } from "./connection";
 // import champions from "../../config/champions.json";
 
 const champions: string[] = [];
@@ -16,6 +17,9 @@ export class Ozone {
   protected bot: Client;
   protected champions: Record<string, User> = {};
 
+  protected maxLoginAttempts = 5;
+  protected timeToWaitBetweenLoginAttempts = 60 * 1000;
+
   constructor() {
     this.determineDeployment();
 
@@ -24,8 +28,7 @@ export class Ozone {
       this.onReady();
     });
 
-    console.log("Beginning login.")
-    this.bot.login(process.env.OZONE_TOKEN);
+    attemptLogin(this.bot);
   }
 
   /**
