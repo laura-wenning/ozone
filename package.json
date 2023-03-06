@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "ts-node src/app.ts",
-    "start:prod": "docker build . -t ozone:dev && prisma db push && docker-compose up -d",
+    "start:prod": "docker build . -t ozone:latest && prisma db push && docker-compose up -d",
     "dev": "nodemon src/app.ts",
     "build": "tsc",
     "prisma": "prisma generate"
