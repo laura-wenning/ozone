@@ -1,9 +1,8 @@
+# Ozone
+Ozone is a Rust-based application that serves as a foundation for a web application and Discord bot. 
+
 # Development Setup
-1. Install required modules using `yarn install`
-2. Create a .env file. Refer to the environment variables section below
-3. Run `prisma generate` to create the files required for typing
-4. If using a new database, run `prisma db push` to create the database structure
-5. Run with `yarn dev`
+*TODO*
 
 # Environment Variables
 `NODE_ENV`. The Node Environment
