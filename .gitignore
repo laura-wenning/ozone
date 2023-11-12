@@ -10,6 +10,8 @@ config/*
 # The configuration file for secrets
 config.json
 
+.obsidian
+
 # Files from a possible rust conversion in the future
 .cache/
 target/
