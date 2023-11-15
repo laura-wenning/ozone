@@ -1,15 +1,20 @@
 use self::discord_bot::discord_start;
-use dotenv;
 
+mod database;
 mod discord_bot;
 
 #[tokio::main]
 async fn main() {
-	dotenv::dotenv().ok();
+    dotenv::dotenv().ok();
 
-	println!("Hello, world!");
-	let discord_thread = discord_start();
-	println!("Yo!");
+    println!("Hello, world!");
+    let db = database::connect().await;
+    match db {
+        Some(_) => println!("Database connection accepted!"),
+        None => println!("Database connection failed :("),
+    }
+    let discord_thread = discord_start();
+    println!("Yo!");
 
-	discord_thread.await;
+    discord_thread.await;
 }
