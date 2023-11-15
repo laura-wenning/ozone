@@ -3,9 +3,13 @@ use dotenv;
 
 mod discord_bot;
 
-fn main() {
+#[tokio::main]
+async fn main() {
 	dotenv::dotenv().ok();
 
 	println!("Hello, world!");
-	discord_start();
+	let discord_thread = discord_start();
+	println!("Yo!");
+
+	discord_thread.await;
 }

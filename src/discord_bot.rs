@@ -1,10 +1,12 @@
 use std::env;
 
-use serenity::async_trait;
+use serenity::futures::future::Ready;
+use serenity::{async_trait, Error};
 use serenity::prelude::*;
 use serenity::model::channel::Message;
 use serenity::framework::standard::macros::{command, group};
 use serenity::framework::standard::{StandardFramework, CommandResult};
+use serenity::model::id::UserId;
 
 #[group]
 #[commands(ping)]
@@ -13,9 +15,12 @@ struct General;
 struct Handler;
 
 #[async_trait]
-impl EventHandler for Handler {}
+impl EventHandler for Handler {
+  async fn ready(&self, ctx: Context, ready: Ready) {
 
-#[tokio::main]
+  }
+}
+
 pub async fn discord_start() {
   let framework = StandardFramework::new()
     .configure(|c| c.prefix("/"))
@@ -29,9 +34,17 @@ pub async fn discord_start() {
     .await
     .expect("Error creating client");
 
-  if let Err(why) = client.start().await {
-    println!("An error occured while running the client: {:?}", why);
+  let client_thread = client.start();
+  
+  
+  if let Err(why) = client_thread.await {
+    on_startup_fail(why);
   }
+}
+
+
+fn on_startup_fail(why: Error) {
+  println!("An error occured while running the client: {:?}", why);
 }
 
 #[command]
