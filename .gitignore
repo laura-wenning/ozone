@@ -15,3 +15,6 @@ config.json
 # Files from a possible rust conversion in the future
 .cache/
 target/
+
+# Blocking this for now. We may tweak this in the future for consistent development experiences
+.vscode
