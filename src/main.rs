@@ -10,12 +10,18 @@ async fn main() {
 
     println!("Hello, world!");
     let db = database::connect().await;
-    match db {
-        Some(_) => println!("Database connection accepted!"),
-        None => println!("Database connection failed :("),
-    }
+    let db = match db {
+        Some(db) => {
+            println!("Database connection accepted!");
+            db
+        }
+        None => panic!("Database connection failed :("),
+    };
 
-    Migrator::up(&db, None).await?;
+    let migrator = Migrator::up(&db, None).await;
+    if let Err(why) = migrator {
+        panic!("{:?}", why);
+    }
 
     let discord_thread = discord_start();
     println!("Yo!");

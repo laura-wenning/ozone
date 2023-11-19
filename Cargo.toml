@@ -4,10 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [workspace]
-members = [".", "entity", "migration"]
+members = [".", "entities", "migration"]
 
 [dependencies]
-entity = { path = "entity" }
+entity = { path = "entities" }
 migration = { path = "migration" }
 
 serenity = "0.11"
