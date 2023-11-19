@@ -1,4 +1,4 @@
-use sea_orm_migration::{prelude::*, sea_orm::EnumIter};
+use sea_orm_migration::{prelude::*, sea_orm::EnumIter, sea_query::extension::postgres::Type};
 
 #[derive(DeriveMigrationName)]
 pub struct Migration;
@@ -6,6 +6,19 @@ pub struct Migration;
 #[async_trait::async_trait]
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
+        manager
+            .create_type(
+                Type::create()
+                    .as_enum(DiscordSourceType::Table)
+                    .values([
+                        DiscordSourceType::None,
+                        DiscordSourceType::Bot,
+                        DiscordSourceType::Roleplay,
+                    ])
+                    .to_owned(),
+            )
+            .await?;
+
         manager
             .create_table(
                 Table::create()
@@ -15,7 +28,6 @@ impl MigrationTrait for Migration {
                         ColumnDef::new(DiscordSource::Id)
                             .uuid()
                             .not_null()
-                            .auto_increment()
                             .primary_key(),
                     )
                     .col(
@@ -65,13 +77,18 @@ impl MigrationTrait for Migration {
                     .col(ColumnDef::new(DiscordSource::UpdatedAt).date_time())
                     .to_owned(),
             )
-            .await
+            .await?;
+        Ok(())
     }
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
             .drop_table(Table::drop().table(DiscordSource::Table).to_owned())
-            .await
+            .await?;
+        manager
+            .drop_type(Type::drop().name(DiscordSourceType::Table).to_owned())
+            .await?;
+        Ok(())
     }
 }
 

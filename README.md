@@ -13,7 +13,12 @@
 `ENABLE_DISCORD_BOT`. Enables Discord bot. Allows for the bot to be disabled for frontend development. Enabled with a value of true (not implemented)
 
 ## Database
-`POSTGRES_USERNAME`. The username to use for connecting to the database.
-`POSTGRES_PASSWORD`. The password to use for connecting to the database.
-`POSTGRES_HOST`. The host where the database is located.
-`POSTGRES_DATABASE`. The specific database to connect to.
+`DATABASE_URL`. The URL to the database. This can be set manually, or with individual environment variables in the following format:
+```bash
+DATABASE_URL=postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_DATABASE}
+```
+
+`DATABASE_USERNAME`. (Optional). The username to use for connecting to the database.
+`DATABASE_PASSWORD`. (Optional). The password to use for connecting to the database.
+`DATABASE_HOST`. (Optional). The host where the database is located.
+`DATABASE_DATABASE`. (Optional). The specific database to connect to.
