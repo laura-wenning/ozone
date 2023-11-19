@@ -53,6 +53,7 @@ impl MigrationTrait for Migration {
                     .col(
                         ColumnDef::new(DiscordSource::IsActive)
                             .boolean()
+                            .not_null()
                             .default(false),
                     )
                     .col(
@@ -70,11 +71,24 @@ impl MigrationTrait for Migration {
                     .col(
                         ColumnDef::new(DiscordSource::SourceConfig)
                             .json()
+                            .not_null()
                             .default("{}"),
                     )
-                    .col(ColumnDef::new(DiscordSource::LastSweptAt).date_time())
-                    .col(ColumnDef::new(DiscordSource::CreatedAt).date_time())
-                    .col(ColumnDef::new(DiscordSource::UpdatedAt).date_time())
+                    .col(
+                        ColumnDef::new(DiscordSource::LastSweptAt)
+                            .date_time()
+                            .not_null(),
+                    )
+                    .col(
+                        ColumnDef::new(DiscordSource::CreatedAt)
+                            .date_time()
+                            .not_null(),
+                    )
+                    .col(
+                        ColumnDef::new(DiscordSource::UpdatedAt)
+                            .date_time()
+                            .not_null(),
+                    )
                     .to_owned(),
             )
             .await?;
