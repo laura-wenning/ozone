@@ -2,6 +2,9 @@
 1. Use https://rustup.rs to install Rust. 
 2. In Ozone, run `cargo run`
 
+## Additional CLIs and External Dependencies
+`sea-orm-cli`. Used for creating migrations and applying them to the database
+
 # Environment Variables
 ## Discord Bot
 `DISCORD_TOKEN`. The Discord token for the Ozone bot. 

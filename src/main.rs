@@ -1,4 +1,5 @@
 use self::discord_bot::discord_start;
+use migration::{Migrator, MigratorTrait};
 
 mod database;
 mod discord_bot;
@@ -13,6 +14,9 @@ async fn main() {
         Some(_) => println!("Database connection accepted!"),
         None => println!("Database connection failed :("),
     }
+
+    Migrator::up(&db, None).await?;
+
     let discord_thread = discord_start();
     println!("Yo!");
 
