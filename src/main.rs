@@ -1,10 +1,10 @@
-use self::discord_bot::discord_start;
+use self::discord::discord_start;
 use entity::{discord_source, sea_orm_active_enums::DiscordSourceType};
 use migration::{Migrator, MigratorTrait};
 use sea_orm::{ActiveModelBehavior, ActiveModelTrait, DatabaseConnection, DbErr, Set};
 
 mod database;
-mod discord_bot;
+mod discord;
 
 #[tokio::main]
 async fn main() {
@@ -24,7 +24,7 @@ async fn main() {
     if let Err(why) = migrator {
         panic!("{:?}", why);
     }
-    let _mdl = insert_test_discord_source(&db).await;
+    // let _mdl = insert_test_discord_source(&db).await;
     let discord_thread = discord_start();
     println!("Yo!");
 

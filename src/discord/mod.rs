@@ -15,6 +15,10 @@ struct Handler;
 
 #[async_trait]
 impl EventHandler for Handler {
+    async fn message(&self, _ctx: Context, msg: Message) {
+        println!("User {} said: '{}'.", msg.author.name, msg.content);
+    }
+
     async fn ready(&self, ctx: Context, ready: Ready) {
         println!("{} is connected!", ready.user.name);
 
@@ -50,6 +54,7 @@ fn get_developer_id() -> Option<u64> {
     Some(developer_id)
 }
 
+/// Starts the Discord application
 pub async fn discord_start() {
     let framework: StandardFramework = StandardFramework::new()
         .configure(|c| c.prefix("/"))
