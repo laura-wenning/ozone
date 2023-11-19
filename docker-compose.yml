@@ -1,18 +1,8 @@
 version: '3'
 services:
   ozone:
-    container_name: ozone${POSTFIX}
+    container_name: ${CONTAINER_NAME:-ozone}
     image: ozone:latest
     restart: always
-    ports:
-      - ${PORT}:3000
-    environment:
-     - PORT=3000
     env_file:
      - .env
-    networks:
-      - database_postgres
-
-networks:
-  database_postgres:
-    external: true
