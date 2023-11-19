@@ -1,15 +1,11 @@
-FROM node:16
-COPY . /usr/src/app/
-WORKDIR /usr/src/app/
+FROM rust:latest as builder
+WORKDIR /usr/src/ozone
 
-# Clean up existing distribution files
-RUN rm -rf dist
+COPY . .
 
-RUN yarn
-RUN yarn build
+RUN cargo install --path .
 
-# Clean up unused code for smaller package
-# TODO - can we clean up node_modules?
-
-CMD yarn start
-
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y libc6 && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /usr/local/cargo/bin/ozone /usr/local/bin/ozone
+CMD ["ozone"]
