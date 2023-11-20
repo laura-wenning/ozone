@@ -7,6 +7,10 @@ use serenity::model::gateway::Ready;
 use serenity::prelude::*;
 use serenity::{async_trait, Error};
 
+use self::source::SOURCE_GROUP;
+
+mod source;
+
 #[group]
 #[commands(ping)]
 struct General;
@@ -58,7 +62,8 @@ fn get_developer_id() -> Option<u64> {
 pub async fn discord_start() {
     let framework: StandardFramework = StandardFramework::new()
         .configure(|c| c.prefix("/"))
-        .group(&GENERAL_GROUP);
+        .group(&GENERAL_GROUP)
+        .group(&SOURCE_GROUP);
 
     let token: String = env::var("DISCORD_TOKEN").expect("token");
     let intents: GatewayIntents =
