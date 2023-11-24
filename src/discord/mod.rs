@@ -7,9 +7,9 @@ use serenity::model::gateway::Ready;
 use serenity::prelude::*;
 use serenity::{async_trait, Error};
 
-use self::source::SOURCE_GROUP;
+use self::channel::CHANNEL_GROUP;
 
-mod source;
+mod channel;
 
 #[group]
 #[commands(ping)]
@@ -63,7 +63,7 @@ pub async fn discord_start() {
     let framework: StandardFramework = StandardFramework::new()
         .configure(|c| c.prefix("/"))
         .group(&GENERAL_GROUP)
-        .group(&SOURCE_GROUP);
+        .group(&CHANNEL_GROUP);
 
     let token: String = env::var("DISCORD_TOKEN").expect("token");
     let intents: GatewayIntents =
